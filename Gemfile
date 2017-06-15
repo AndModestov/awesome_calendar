@@ -9,7 +9,7 @@ gem 'coffee-rails'
 gem 'jquery-rails'
 gem 'jbuilder'
 gem 'slim-rails'
-# gem 'devise'
+gem 'devise'
 gem 'twitter-bootstrap-rails'
 # gem 'carrierwave'
 # gem 'omniauth'
@@ -46,6 +46,7 @@ group :test, :development do
 end
 
 group :test do
-  gem 'shoulda-matchers'
+  gem 'shoulda-matchers', git: 'https://github.com/thoughtbot/shoulda-matchers.git', branch: 'rails-5'
+  gem 'rails-controller-testing'
   gem 'json_spec'
 end
