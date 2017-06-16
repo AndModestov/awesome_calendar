@@ -9,6 +9,10 @@ RSpec.describe EventsController, type: :controller do
     it 'renders index view' do
       expect(response).to render_template :index
     end
+
+    it 'assigns a new event to @event' do
+      expect(assigns(:event)).to be_a_new Event
+    end
   end
 
   describe 'GET #index json' do
@@ -36,6 +40,35 @@ RSpec.describe EventsController, type: :controller do
 
     it 'should render the show view' do
       expect(response).to render_template :show
+    end
+  end
+
+  describe 'POST #create' do
+
+    context 'with valid information' do
+      it 'saves the event in database' do
+        expect {
+          post :create, params: { event: attributes_for(:event) }, format: :js
+        }.to change(Event, :count).by(1)
+      end
+
+      it 'renders created event json' do
+        post :create, params: { event: attributes_for(:event) }, format: :js
+        event = Event.last
+        resp = JSON.parse(response.body)
+
+        expect(resp['title']).to eq event.name
+        expect(resp['start'].to_datetime).to eq event.start_time
+        expect(resp['end'].to_datetime).to eq event.end_time
+      end
+    end
+
+    context 'with invalid information' do
+      it 'does not save the event' do
+        expect {
+          post :create, params: { event: attributes_for(:invalid_event) }, format: :js
+        }.to_not change(Event, :count)
+      end
     end
   end
 end

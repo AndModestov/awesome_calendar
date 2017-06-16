@@ -1,1 +1,14 @@
 div#calendar
+br
+	
+a.new-event-link.btn.btn-primary New event
+br
+
+.create-event
+  = form_for @event, remote: true do |f|
+    p
+      .event-errors
+      = f.text_field :name, placeholder: 'Name'
+      = f.text_field :start_time, placeholder: 'Starts at'
+      = f.text_field :end_time, placeholder: 'Ends at'
+    p = f.submit 'Create', class: 'btn btn-primary'

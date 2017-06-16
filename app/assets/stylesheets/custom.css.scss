@@ -1,0 +1,37 @@
+#logo {
+  float: left;
+  margin-right: 10px;
+  margin-left: 10px;
+  font-size: 2em;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: -1px;
+  padding-top: 10px;
+  font-weight: bold;
+  line-height: 1;
+
+  &:hover {
+    color: #ddddff;
+    text-decoration: none;
+  }
+}
+
+.nav {
+  margin-top: 5px;
+}
+
+.container {
+  margin-top: 60px;
+  margin-bottom: 20px;
+  width: 60%;
+}
+
+/* forms */
+
+input, textarea, select, .uneditable-input {
+  border: 1px solid #cacaca;
+  width: 100%;
+  padding: 1rem;
+  border-radius: 3px;
+  margin-bottom: 15px;
+}

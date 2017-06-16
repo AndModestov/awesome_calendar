@@ -64,6 +64,9 @@ GEM
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
+    capybara-webkit (1.14.0)
+      capybara (>= 2.3.0, < 2.14.0)
+      json
     case_transform (0.2)
       activesupport
     childprocess (0.7.0)
@@ -268,6 +271,7 @@ DEPENDENCIES
   active_model_serializers
   cancancan
   capybara
+  capybara-webkit
   coffee-rails
   database_cleaner
   devise

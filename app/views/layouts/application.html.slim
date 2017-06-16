@@ -6,7 +6,8 @@ html
     = javascript_include_tag 'application', 'data-turbolinks-track' => true 
     = csrf_meta_tags
   body
-    div.container
+    = render 'layouts/header'
+    .container
       = bootstrap_flash
       
       = yield

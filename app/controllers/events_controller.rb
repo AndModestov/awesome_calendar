@@ -1,9 +1,10 @@
 class EventsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_event, only: [:show]
+  before_action :set_event, only: [:show, :update]
   before_action :set_events, only: :index
 
   def index
+    @event = Event.new
     respond_to do |format|
       format.html {}
       format.json { render json: @events, each_serializer: EventSerializer }
@@ -11,6 +12,16 @@ class EventsController < ApplicationController
   end
 
   def show
+  end
+
+  def create
+    event = Event.create(event_params)
+    render json: event, serializer: EventSerializer
+  end
+
+  def update
+    @event.update(event_params)
+    redirect_to root_path
   end
 
   private
@@ -21,5 +32,9 @@ class EventsController < ApplicationController
 
   def set_event
     @event = Event.find(params[:id])
+  end
+
+  def event_params
+    params.require(:event).permit(:name, :start_time, :end_time)
   end
 end
