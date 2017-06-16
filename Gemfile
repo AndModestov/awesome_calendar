@@ -23,10 +23,13 @@ gem 'dotenv-deployment', require: 'dotenv/deployment'
 gem 'therubyracer'
 # gem 'unicorn'
 # gem 'redis-rails'
+gem 'momentjs-rails'
+gem 'fullcalendar-rails'
 
 gem 'sdoc', group: :doc
 
 group :development do
+  gem 'pry-rails'
   # gem 'capistrano', require: false
   # gem 'capistrano-bundler', require: false
   # gem 'capistrano-rails', require: false
