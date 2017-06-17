@@ -1,1 +1,20 @@
-h1 = @event.name
+h1#event-name = @event.name
+br
+	
+table.table
+  thead
+    tr
+      th Owner:
+      th starts at:
+      th ends at:
+  tbody
+    tr
+      td = @event.user.email
+      td#start-time = @event.formatted_start_time
+      td#end-time = @event.formatted_end_time
+      
+- if @event.user == current_user
+  a.new-event-link.btn.btn-primary Edit event
+  br
+  = render 'form', event: @event, method: 'patch'
+      

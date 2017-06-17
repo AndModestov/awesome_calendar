@@ -6,12 +6,4 @@ a#render_all_events.btn.btn-default all
 	
 a.new-event-link.btn.btn-primary New event
 br
-
-.create-event
-  = form_for @event, remote: true do |f|
-    p.rerender_user_events
-      .event-errors
-      = f.text_field :name, placeholder: 'Name'
-      .picker = f.text_field :start_time, placeholder: 'Starts at', class: 'datetimepicker'
-      .picker = f.text_field :end_time, placeholder: 'Ends at', class: 'datetimepicker'
-    p = f.submit 'Create', class: 'btn btn-primary'
+= render 'form', event: @event, method: 'post'

@@ -15,13 +15,20 @@ class EventsController < ApplicationController
   end
 
   def create
-    event = current_user.events.create(event_params)
-    render json: event, serializer: EventSerializer
+    @event = current_user.events.new(event_params)
+    if @event.save
+      render json: @event, serializer: EventSerializer
+    else
+      render json: @event.errors, status: :unprocessable_entity
+    end
   end
 
   def update
-    @event.update(event_params)
-    redirect_to root_path
+    if @event.update(event_params)
+      render json: @event, serializer: EditEventSerializer
+    else
+      render json: @event.errors, status: :unprocessable_entity
+    end
   end
 
   private

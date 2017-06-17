@@ -1,0 +1,10 @@
+.event_form
+  = form_for event, remote: true, method: method do |f|
+    p.rerender_user_events
+      .event-errors
+      = f.text_field :name, placeholder: 'Name'
+      .picker = f.text_field :start_time, placeholder: 'Starts at', id: 'datetimepicker-1',
+                                          data: { date: event.formatted_start_time }
+      .picker = f.text_field :end_time, placeholder: 'Ends at', id: 'datetimepicker-2',
+                                        data: { date: event.formatted_end_time }
+    p = f.submit 'Save', class: 'btn btn-primary'
