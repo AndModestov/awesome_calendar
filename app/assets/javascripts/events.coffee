@@ -3,8 +3,11 @@ ready = ->
     events: '/events.json'
   )
 
+  $('.datetimepicker').datetimepicker(
+    format: 'DD.MM.YYYY HH:mm'
+  );
+
   $('.new-event-link').click (e) ->
-    # e.preventDefault();
     $(this).hide()
     $('form.new_event').show()
 

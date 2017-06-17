@@ -25,6 +25,7 @@ gem 'therubyracer'
 # gem 'redis-rails'
 gem 'momentjs-rails'
 gem 'fullcalendar-rails'
+gem 'bootstrap3-datetimepicker-rails'
 
 gem 'sdoc', group: :doc
 

@@ -9,6 +9,6 @@ br
     p
       .event-errors
       = f.text_field :name, placeholder: 'Name'
-      = f.text_field :start_time, placeholder: 'Starts at'
-      = f.text_field :end_time, placeholder: 'Ends at'
+      .picker = f.text_field :start_time, placeholder: 'Starts at', class: 'datetimepicker'
+      .picker = f.text_field :end_time, placeholder: 'Ends at', class: 'datetimepicker'
     p = f.submit 'Create', class: 'btn btn-primary'
