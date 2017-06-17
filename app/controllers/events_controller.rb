@@ -15,7 +15,7 @@ class EventsController < ApplicationController
   end
 
   def create
-    event = Event.create(event_params)
+    event = current_user.events.create(event_params)
     render json: event, serializer: EventSerializer
   end
 
@@ -28,6 +28,7 @@ class EventsController < ApplicationController
 
   def set_events
     @events = Event.crossing_interval(params[:start], params[:end]) if params[:start]
+    @events = @events.for_user(current_user.id) if params[:for_user].present?
   end
 
   def set_event

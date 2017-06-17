@@ -1,12 +1,15 @@
 div#calendar
 br
+
+a#render_user_events.btn.btn-default own 
+a#render_all_events.btn.btn-default all
 	
 a.new-event-link.btn.btn-primary New event
 br
 
 .create-event
   = form_for @event, remote: true do |f|
-    p
+    p.rerender_user_events
       .event-errors
       = f.text_field :name, placeholder: 'Name'
       .picker = f.text_field :start_time, placeholder: 'Starts at', class: 'datetimepicker'

@@ -5,6 +5,7 @@ RSpec.describe Event, type: :model do
   it { should validate_length_of(:name).is_at_most(90) }
   it { should validate_presence_of :start_time }
   it { should validate_presence_of :end_time }
+  it { should belong_to :user }
 
   describe 'crossing_interval scope' do
     let!(:event_in_range1){ create(:event, start_time: '2017-07-01', end_time: '2017-07-19') }
@@ -17,6 +18,20 @@ RSpec.describe Event, type: :model do
       expect(events).to include event_in_range1
       expect(events).to include event_in_range2
       expect(events).to_not include event_not_in_range
+    end
+  end
+
+  describe 'for_user scope' do
+    let!(:user){ create(:user) }
+    let!(:user2){ create(:user) }
+    let!(:event){ create(:event, user: user) }
+    let!(:event2){ create(:event, user: user2) }
+
+    it 'should return events only for user' do
+      events = Event.for_user(user.id)
+
+      expect(events).to include event
+      expect(events).to_not include event2
     end
   end
 end
