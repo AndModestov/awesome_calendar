@@ -3,6 +3,7 @@ FactoryGirl.define do
     sequence(:name) { |n| "event#{n}" }
     sequence(:start_time) { |n| Time.now + n.hours }
     sequence(:end_time) { |n| Time.now + (n+3).hours }
+    repeat_till_date Time.now + 5.days
     user nil
   end
 

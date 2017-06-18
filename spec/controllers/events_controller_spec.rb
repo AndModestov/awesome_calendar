@@ -84,6 +84,11 @@ RSpec.describe EventsController, type: :controller do
         expect(resp['start'].to_datetime).to eq event.start_time
         expect(resp['end'].to_datetime).to eq event.end_time
       end
+
+      it 'calls EventCreationJob' do
+        params = attributes_for(:event).merge({repeat: 'every day'})
+        post :create, params: { event: attributes_for(:event) }, format: :js
+      end
     end
 
     context 'with invalid information' do

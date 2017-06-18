@@ -5,6 +5,7 @@ class Event < ApplicationRecord
 
   validates :name, presence: true, length: { maximum: 90 }
   validates :start_time, :end_time, :user_id, presence: true
+  validates :repeat_till_date, presence: true, if: :repeating?
   validate :cant_ends_earlier_than_starts
 
   enum repeat: {
@@ -16,6 +17,10 @@ class Event < ApplicationRecord
   end
 
   scope :for_user, -> (user_id) { where(user_id: user_id) }
+
+  def repeating?
+    repeat.present? && repeat != 'once'
+  end
 
   def cant_ends_earlier_than_starts
     if start_time.present? && start_time >= end_time
