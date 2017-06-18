@@ -7,6 +7,13 @@ feature 'User can create new event' do
     log_in(user)
     visit events_path
     find('a.new-event-link').click
+
+    expect(page).to have_selector('input#event_name')
+    expect(page).to have_selector('input#event_start_time')
+    expect(page).to have_selector('input#event_end_time')
+    expect(page).to have_selector('select#event_repeat')
+    expect(page).to have_selector('input#event_repeat_till_date')
+
     fill_in 'event_name', with: 'New Event Name'
     fill_in 'Starts at', with: '13-06-2017 21:30 +03:00'
     fill_in 'Ends at', with: '15-06-2017 21:30 +03:00'

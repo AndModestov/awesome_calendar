@@ -4,6 +4,10 @@ class Event < ApplicationRecord
   validates :name, presence: true, length: { maximum: 90 }
   validates :start_time, :end_time, :user_id, presence: true
 
+  enum repeat: {
+    'once'=>0, 'every day'=>1, 'every week'=>2, 'every month'=>3, 'every year'=>4
+  }
+
   scope :crossing_interval, -> (start_time, end_time) do
     where.not('start_time >= ? OR end_time <= ?', end_time, start_time)
   end

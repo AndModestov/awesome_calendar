@@ -38,12 +38,13 @@ ready = ->
   set_datetimepicker()
 
 set_datetimepicker = ->
-  start_date = $('#datetimepicker-1').data('date')
-  end_date = $('#datetimepicker-2').data('date')
-  $('#datetimepicker-1').datetimepicker(format: 'DD-MM-YYYY HH:mm Z')
-  $('#datetimepicker-2').datetimepicker(format: 'DD-MM-YYYY HH:mm Z')
-  $('#datetimepicker-1').val(start_date)
-  $('#datetimepicker-2').val(end_date)
+  start_date = $('#event_start_time').data('date')
+  end_date = $('#event_end_time').data('date')
+  $('#event_start_time').datetimepicker(format: 'DD-MM-YYYY HH:mm Z')
+  $('#event_end_time').datetimepicker(format: 'DD-MM-YYYY HH:mm Z')
+  $('#event_start_time').val(start_date)
+  $('#event_end_time').val(end_date)
+  $('.common_datetimepicker').datetimepicker(format: 'DD-MM-YYYY HH:mm Z')
 
 $(document).ready(ready)
 $(document).on('page:load', ready)
