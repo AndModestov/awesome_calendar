@@ -16,8 +16,8 @@ gem 'twitter-bootstrap-rails'
 # gem 'omniauth-facebook'
 gem 'cancancan'
 gem 'active_model_serializers'
-# gem 'sidekiq'
-# gem 'sinatra', '>= 1.3.0', require: nil
+gem 'sidekiq'
+gem 'sinatra', '>= 1.3.0', require: nil
 gem 'dotenv'
 gem 'dotenv-deployment', require: 'dotenv/deployment'
 gem 'therubyracer'

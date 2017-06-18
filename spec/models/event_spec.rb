@@ -36,4 +36,28 @@ RSpec.describe Event, type: :model do
       expect(events).to_not include event2
     end
   end
+
+  describe 'repeat_time_offset method' do
+    let(:user){ create(:user) }
+    let!(:event1){ create(:event, user: user, repeat: 'every day') }
+    let!(:event2){ create(:event, user: user, repeat: 'every week') }
+    let!(:event3){ create(:event, user: user, repeat: 'every month') }
+
+
+    it 'should return right time offset' do
+      expect(event1.repeat_time_offset).to eq 1.day
+      expect(event2.repeat_time_offset).to eq 1.week
+      expect(event3.repeat_time_offset).to eq 1.month
+    end
+  end
+
+  describe 'cant_ends_earlier_than_starts validator' do
+    let(:user){ create(:user) }
+    let!(:event) { Event.new(user: user, name: 'name', start_time: Time.now, end_time: Time.now-1.hour) }
+
+    it 'should not be valid if end_time earlier than start' do
+      expect(event).to_not be_valid
+      expect(event.errors.full_messages).to eq ["End time cant't be lower than start"]
+    end
+  end
 end
