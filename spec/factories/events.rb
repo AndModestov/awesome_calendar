@@ -7,7 +7,7 @@ FactoryGirl.define do
   end
 
   factory :invalid_event, class: 'Event' do
-    sequence(:name) { |n| "event#{n}" }
+    name nil
     start_time nil
     end_time nil
     user nil

@@ -98,14 +98,22 @@ RSpec.describe EventsController, type: :controller do
         post :create, params: { event: attributes_for(:invalid_event) }, format: :js
         expect(response).to_not be_success
       end
+
+      it 'returns errors array' do
+        post :create, params: { event: attributes_for(:invalid_event) }, format: :js
+        errors = JSON.parse(response.body)
+        expect(errors).to match_array ["Name can't be blank", "Start time can't be blank",
+                                       "End time can't be blank"]
+      end
     end
   end
+
 
   describe 'PATCH #update' do
     let!(:event) { create(:event, user: @user) }
     let!(:other_user_event) { create(:event, user: other_user) }
 
-    context 'update current users event' do
+    context 'update current users event with valid data' do
       it 'assigns event to @event' do
         patch :update, params: { id: event, event: attributes_for(:event) }, format: :js
         expect(assigns(:event)).to eq event
@@ -125,6 +133,27 @@ RSpec.describe EventsController, type: :controller do
         expect(resp['name']).to eq 'updated name'
         expect(resp['formatted_start_time'].to_datetime).to eq '2017-05-22'
         expect(resp['formatted_end_time'].to_datetime).to eq '2017-05-24'
+      end
+    end
+
+    context 'update current users event with invalid data' do
+      before { patch :update, params: { id: event, event: attributes_for(:invalid_event) }, format: :js }
+
+      it 'assigns event to @event' do
+        expect(assigns(:event)).to eq event
+      end
+
+      it 'not changes event attributes' do
+        event.reload
+        expect(event.name).to_not be_blank
+        expect(event.start_time).to_not be_blank
+        expect(event.end_time).to_not be_blank
+      end
+
+      it 'returns errors array' do
+        errors = JSON.parse(response.body)
+        expect(errors).to match_array ["Name can't be blank", "Start time can't be blank",
+                                       "End time can't be blank"]
       end
     end
 

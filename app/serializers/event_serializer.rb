@@ -10,14 +10,14 @@ class EventSerializer < ActiveModel::Serializer
   end
 
   def start
-    object.start_time
+    object.start_time.localtime
   end
 
   def end
-    object.end_time
+    object.end_time.localtime
   end
 
   def url
-    "http://#{ENV['HOST_IP']}/events/#{object.id}.html"
+    "http://#{ENV['HOST_IP']}/events/#{object.id}"
   end
 end

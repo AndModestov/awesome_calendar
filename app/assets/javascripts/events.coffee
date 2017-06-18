@@ -20,6 +20,11 @@ ready = ->
     $('.event_form').hide()
     $('.new-event-link').show()
 
+  $('.event_form').bind 'ajax:error', (e, data, status, xhr) ->
+    errors = data.responseJSON
+    $.each errors, (i, error) ->
+      $('.event-errors').append("<li>#{error}</li>")
+
   $('form.edit_event').bind 'ajax:success', (e, data, status, xhr) ->
     new_name = xhr.responseJSON.name
     new_start = xhr.responseJSON.formatted_start_time
