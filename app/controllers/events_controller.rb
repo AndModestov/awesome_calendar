@@ -3,6 +3,8 @@ class EventsController < ApplicationController
   before_action :set_event, only: [:show, :update]
   before_action :set_events, only: :index
 
+  authorize_resource
+
   def index
     @event = Event.new
     respond_to do |format|
@@ -19,7 +21,7 @@ class EventsController < ApplicationController
     if @event.save
       render json: @event, serializer: EventSerializer
     else
-      render json: @event.errors.full_messages, status: :unprocessable_entity
+      render_errors
     end
   end
 
@@ -27,11 +29,15 @@ class EventsController < ApplicationController
     if @event.update(event_params)
       render json: @event, serializer: EditEventSerializer
     else
-      render json: @event.errors.full_messages, status: :unprocessable_entity
+      render_errors
     end
   end
 
   private
+
+  def render_errors
+    render json: @event.errors.full_messages, status: :unprocessable_entity
+  end
 
   def set_events
     @events = Event.crossing_interval(params[:start], params[:end]) if params[:start]

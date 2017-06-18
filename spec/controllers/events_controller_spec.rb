@@ -120,7 +120,7 @@ RSpec.describe EventsController, type: :controller do
       end
 
       it 'changes event attributes' do
-        patch :update, params: { id: event, event: { name: 'new event name' } }, format: :js
+        patch :update, params: { id: event, event: {name: 'new event name'} }, format: :js
         event.reload
         expect(event.name).to eq 'new event name'
       end
@@ -157,12 +157,12 @@ RSpec.describe EventsController, type: :controller do
       end
     end
 
-    # context 'update other users event' do
-    #   it 'not changes event attributes' do
-    #     patch :update, id: other_user_event, event: { name: 'wrong name' }, format: :js
-    #     other_user_event.reload
-    #     expect(other_user_event.name).to_not eq 'wrong name'
-    #   end
-    # end
+    context 'update other users event' do
+      it 'not changes event attributes' do
+        patch :update, params: { id: other_user_event, event: {name: 'wrong name'} }, format: :js
+        other_user_event.reload
+        expect(other_user_event.name).to_not eq 'wrong name'
+      end
+    end
   end
 end
