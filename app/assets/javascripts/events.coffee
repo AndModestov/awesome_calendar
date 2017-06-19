@@ -28,12 +28,12 @@ ready = ->
 
   $('form.edit_event').bind 'ajax:success', (e, data, status, xhr) ->
     new_name = xhr.responseJSON.name
-    new_start = xhr.responseJSON.formatted_start_time
-    new_end = xhr.responseJSON.formatted_end_time
+    new_start = xhr.responseJSON.start_hours
+    new_duration = xhr.responseJSON.duration + ' hours'
     repeat = xhr.responseJSON.repeat
     $('#event-name').text(new_name)
     $('#start-time').text(new_start)
-    $('#end-time').text(new_end)
+    $('#duration').text(new_duration)
     $('#repeat').text(repeat)
     $('.event_form').hide()
     $('.new-event-link').show()

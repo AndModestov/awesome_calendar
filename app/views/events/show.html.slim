@@ -11,8 +11,8 @@ table.table
   tbody
     tr
       td = @event.user.email
-      td#start-time = @event.formatted_start_time.strftime('%H:%M')
-      td#end-time = "#{@event.duration} hours"
+      td#start-time = @event.start_time.localtime.strftime('%H:%M')
+      td#duration = "#{@event.duration} hours"
       td#repeat = @event.repeat
       
 - if @event.user == current_user

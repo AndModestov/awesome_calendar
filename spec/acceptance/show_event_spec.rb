@@ -12,8 +12,8 @@ feature 'User can watch the event' do
 
     expect(page).to have_content(event1.name)
     expect(page).to have_content(user1.email)
-    expect(page).to have_content(event1.formatted_start_time)
-    expect(page).to have_content(event1.formatted_end_time)
+    expect(page).to have_content(event1.start_time.localtime.strftime('%H:%M'))
+    expect(page).to have_content(event1.duration)
     expect(page).to have_selector('a.new-event-link')
   end
 
@@ -23,8 +23,8 @@ feature 'User can watch the event' do
 
     expect(page).to have_content(event2.name)
     expect(page).to have_content(user2.email)
-    expect(page).to have_content(event2.formatted_start_time)
-    expect(page).to have_content(event2.formatted_end_time)
+    expect(page).to have_content(event2.start_time.localtime.strftime('%H:%M'))
+    expect(page).to have_content(event2.duration)
     expect(page).to_not have_selector('a.new-event-link')
   end
 
@@ -34,8 +34,8 @@ feature 'User can watch the event' do
     expect(page).to have_text('You need to sign in or sign up before continuing.')
     expect(page).to_not have_content(event1.name)
     expect(page).to_not have_content(user1.email)
-    expect(page).to_not have_content(event1.formatted_start_time)
-    expect(page).to_not have_content(event1.formatted_end_time)
+    expect(page).to_not have_content(event1.start_time.localtime.strftime('%H:%M'))
+    expect(page).to_not have_content(event1.duration)
     expect(page).to_not have_selector('a.new-event-link')
   end
 end

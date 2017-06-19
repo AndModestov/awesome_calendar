@@ -14,15 +14,18 @@ feature 'User can edit the event' do
     expect(page).to have_selector(:xpath, "//input[@value='#{event1.name}']")
     expect(page).to have_selector(:xpath, "//input[@data-date='#{event1.formatted_start_time}']")
     expect(page).to have_selector(:xpath, "//input[@data-date='#{event1.formatted_end_time}']")
+    expect(page).to have_selector('select#event_repeat')
 
     fill_in 'Name', with: 'New event name'
     fill_in 'Starts at', with: '13-06-2017 21:30 +03:00'
     fill_in 'Ends at', with: '15-06-2017 21:30 +03:00'
+    find('select#event_repeat').find(:xpath, 'option[3]').select_option
     click_on 'Save'
 
     expect(page).to have_selector(:xpath, "//h1[text()='New event name']")
-    expect(page).to have_selector(:xpath, "//tr/td[text()='13-06-2017 21:30 +0300']")
-    expect(page).to have_selector(:xpath, "//tr/td[text()='15-06-2017 21:30 +0300']")
+    expect(page).to have_selector(:xpath, "//tr/td[text()='21:30']")
+    expect(page).to have_selector(:xpath, "//tr/td[text()='48 hours']")
+    expect(page).to have_selector(:xpath, "//tr/td[text()='every week']")
   end
 
   scenario 'Authenticated user trying to edit his own event with invalid data', js: true do

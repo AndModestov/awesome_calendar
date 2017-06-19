@@ -18,11 +18,11 @@ class Event < ApplicationRecord
   end
 
   def formatted_start_time
-    start_time.localtime if start_time
+    start_time.localtime.strftime('%e-%m-%Y %H:%M %z') if start_time
   end
 
   def formatted_end_time
-    end_time.localtime if end_time
+    end_time.localtime.strftime('%e-%m-%Y %H:%M %z') if end_time
   end
 
   def url
