@@ -6,16 +6,14 @@ table.table
     tr
       th Owner:
       th Starts at:
-      th Ends at:
+      th Duration:
       th Repeat:
-      th Repeat till:
   tbody
     tr
       td = @event.user.email
-      td#start-time = @event.formatted_start_time
-      td#end-time = @event.formatted_end_time
-      td = @event.repeat
-      td = @event.repeat_till_date
+      td#start-time = @event.formatted_start_time.strftime('%H:%M')
+      td#end-time = "#{@event.duration} hours"
+      td#repeat = @event.repeat
       
 - if @event.user == current_user
   a.new-event-link.btn.btn-primary Edit event

@@ -6,9 +6,6 @@
       = f.text_field :start_time, placeholder: 'Starts at', data: { date: event.formatted_start_time }
     .picker
       = f.text_field :end_time, placeholder: 'Ends at', data: { date: event.formatted_end_time }
-    - unless event.persisted?
-      = f.label :repeat, 'Repeat:'
-      = f.select :repeat, Event.repeats.keys.to_a, {}, class: 'form-control'
-      .picker 
-        = f.text_field :repeat_till_date, placeholder: 'repeat till', class: 'common_datetimepicker'
+    = f.label :repeat, 'Repeat:'
+    = f.select :repeat, Event.repeats.keys.to_a, {}, class: 'form-control'
     = f.submit 'Save', class: 'btn btn-primary'

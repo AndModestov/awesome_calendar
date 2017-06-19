@@ -16,7 +16,8 @@ ready = ->
     $('#calendar').fullCalendar('addEventSource', all_events)
 
   $('form.new_event').bind 'ajax:success', (e, data, status, xhr) ->
-    $('#calendar').fullCalendar('addEventSource', [xhr.responseJSON])
+    $('#calendar').fullCalendar('refetchEvents')
+    # $('#calendar').fullCalendar('addEventSource', [xhr.responseJSON])
     $('.event_form').hide()
     $('.new-event-link').show()
 
@@ -29,9 +30,11 @@ ready = ->
     new_name = xhr.responseJSON.name
     new_start = xhr.responseJSON.formatted_start_time
     new_end = xhr.responseJSON.formatted_end_time
+    repeat = xhr.responseJSON.repeat
     $('#event-name').text(new_name)
     $('#start-time').text(new_start)
     $('#end-time').text(new_end)
+    $('#repeat').text(repeat)
     $('.event_form').hide()
     $('.new-event-link').show()
 

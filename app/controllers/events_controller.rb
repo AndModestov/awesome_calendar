@@ -9,7 +9,7 @@ class EventsController < ApplicationController
     @event = Event.new
     respond_to do |format|
       format.html {}
-      format.json { render json: @events, each_serializer: EventSerializer }
+      format.json { render json: @events }
     end
   end
 
@@ -40,8 +40,8 @@ class EventsController < ApplicationController
   end
 
   def set_events
-    @events = Event.crossing_interval(params[:start], params[:end]) if params[:start]
-    @events = @events.for_user(current_user.id) if params[:for_user].present?
+    user_id = params[:for_user] ? current_user.id : nil
+    @events = Event.crossing_interval(params[:start], params[:end], user_id) if params[:start]
   end
 
   def set_event
@@ -49,6 +49,6 @@ class EventsController < ApplicationController
   end
 
   def event_params
-    params.require(:event).permit(:name, :start_time, :end_time, :repeat, :repeat_till_date)
+    params.require(:event).permit(:name, :start_time, :end_time, :repeat)
   end
 end
