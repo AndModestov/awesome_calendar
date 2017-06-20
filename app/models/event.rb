@@ -1,13 +1,14 @@
 class Event < ApplicationRecord
+
+  enum repeat: {
+    'once'=>0, 'every day'=>1, 'every week'=>2, 'every month'=>3, 'every year'=>4
+  }
+
   belongs_to :user
 
   validates :name, presence: true, length: { maximum: 90 }
   validates :start_time, :end_time, :user_id, presence: true
   validate :cant_ends_earlier_than_starts
-
-  enum repeat: {
-    'once'=>0, 'every day'=>1, 'every week'=>2, 'every month'=>3, 'every year'=>4
-  }
 
   scope :for_user, -> (user_id) { where(user_id: user_id) }
 
@@ -45,10 +46,11 @@ class Event < ApplicationRecord
 
   def self.crossing_interval start_time, end_time, user_id
     events = user_id ? Event.for_user(user_id) : Event.all
+
     current_events = events.where(repeat: 'once')
                            .where.not('start_time >= ? OR end_time <= ?', end_time, start_time)
                            .map { |e| e.serialize } || []
-    repeating_events = events.all_repeating_events_in_interval(start_time, end_time) || []
+    repeating_events = events.build_repeating_events_array(start_time, end_time) || []
 
     current_events + repeating_events
   end
@@ -74,6 +76,7 @@ class Event < ApplicationRecord
     dates.collect do |date|
       s_time = (date.strftime('%e-%m-%Y') + " #{self.start_time.strftime('%H:%M %z')}").to_time
       e_time = s_time + (self.end_time - self.start_time)
+
       {
         title: name,
         description: '',
@@ -86,18 +89,11 @@ class Event < ApplicationRecord
 
   private
 
-  def self.all_repeating_events_in_interval start_time, end_time
-    build_repeating_events_array('every day', start_time, end_time) +
-    build_repeating_events_array('every week', start_time, end_time) +
-    build_repeating_events_array('every month', start_time, end_time) +
-    build_repeating_events_array('every year', start_time, end_time)
-  end
-
-  def self.build_repeating_events_array repeat, start_time, end_time
-    events = Event.where(repeat: repeat)
+  def self.build_repeating_events_array start_time, end_time
     result = []
+    repeat_types = ['every day', 'every week', 'every month', 'every year']
 
-    events.each do |event|
+    Event.where(repeat: repeat_types).find_each do |event|
       dates = event.dates_in_interval(start_time, end_time)
       next unless dates.present?
       result += event.all_repeats_in_dates(dates)

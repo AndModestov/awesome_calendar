@@ -3,7 +3,7 @@ require 'rails_helper'
 feature 'User can create new event' do
   given(:user){ create(:user) }
 
-  scenario 'Authenticated user tryes to create event', js: true do
+  scenario 'Authenticated user trying to create event', js: true do
     log_in(user)
     visit events_path
     find('a.new-event-link').click
@@ -24,7 +24,7 @@ feature 'User can create new event' do
     end
   end
 
-  scenario 'Authenticated user tryes to create repeating event', js: true do
+  scenario 'Authenticated user trying to create repeating event', js: true do
     log_in(user)
     visit events_path
     find('a.new-event-link').click
@@ -43,7 +43,7 @@ feature 'User can create new event' do
     end
   end
 
-  scenario 'Authenticated user tryes to create invalid event', js: true do
+  scenario 'Authenticated user trying to create invalid event', js: true do
     log_in(user)
     visit events_path
     find('a.new-event-link').click
@@ -54,7 +54,7 @@ feature 'User can create new event' do
     expect(page).to have_content "End time can't be blank"
   end
 
-  scenario 'Non-Authenticated user tryes to create event' do
+  scenario 'Non-Authenticated user trying to create event' do
     visit events_path
 
     expect(page).to_not have_selector 'a.new-event-link'
